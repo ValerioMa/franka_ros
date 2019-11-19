@@ -1,5 +1,13 @@
-<?xml version='1.0' encoding='utf-8'?>
-<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="panda">
-  <xacro:include filename="$(find franka_description)/robots/panda_arm.xacro" />
-  <xacro:panda_arm />
+<?xml version="1.0" encoding="utf-8"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="panda_arm">
+
+  <xacro:arg name="hardware_interface" default="PositionJointInterface"/>
+  <xacro:arg name="robot_name" default="panda"/>
+  <xacro:arg name="parent" default='world'/>
+
+  <xacro:include filename="$(find franka_description)/robots/panda_arm/panda_arm.xacro"/>
+  
+  <xacro:panda_arm robot_name="$(arg robot_name)" parent="$(arg parent)" hardware_interface="$(arg hardware_interface)">
+  	<origin xyz="0 0 0" rpy="0 0 0"/>
+  </xacro:panda_arm>
 </robot>

@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:property name="M_PI" value="3.1415926535897931" />
+  <xacro:macro name="arm_base_gazebo">
+
+    <!-- Link Table -->
+    <gazebo reference="table">
+      <mu1>100.0</mu1>
+      <mu2>100.0</mu2>
+      <kp>1000000.0</kp>
+      <kd>1.0</kd>
+      <fdir1>1 0 0</fdir1>
+      <minDepth>0.001</minDepth>
+      <static>true</static>
+    </gazebo>
+   
+  </xacro:macro>
+
+</robot>
+

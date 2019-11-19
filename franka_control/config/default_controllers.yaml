@@ -1,39 +1,48 @@
+# Forward Position Controllers ---------------------------------------
+# http://wiki.ros.org/joint_trajectory_controller
 position_joint_trajectory_controller:
   type: position_controllers/JointTrajectoryController
   joints:
-    - panda_joint1
-    - panda_joint2
-    - panda_joint3
-    - panda_joint4
-    - panda_joint5
-    - panda_joint6
-    - panda_joint7
+    - $(arg robot_name)_joint1
+    - $(arg robot_name)_joint2
+    - $(arg robot_name)_joint3
+    - $(arg robot_name)_joint4
+    - $(arg robot_name)_joint5
+    - $(arg robot_name)_joint6
+    - $(arg robot_name)_joint7
   constraints:
     goal_time: 0.5
-    panda_joint1:
+    $(arg robot_name)_joint1:
       goal: 0.05
-    panda_joint2:
+    $(arg robot_name)_joint2:
       goal: 0.05
-    panda_joint3:
+    $(arg robot_name)_joint3:
       goal: 0.05
-    panda_joint4:
+    $(arg robot_name)_joint4:
       goal: 0.05
-    panda_joint5:
+    $(arg robot_name)_joint5:
       goal: 0.05
-    panda_joint6:
+    $(arg robot_name)_joint6:
       goal: 0.05
-    panda_joint7:
+    $(arg robot_name)_joint7:
       goal: 0.05
 
+# Publish all joint states -----------------------------------
+# FOR REAL FRANKA
 franka_state_controller:
   type: franka_control/FrankaStateController
   publish_rate: 30  # [Hz]
   joint_names:
-    - panda_joint1
-    - panda_joint2
-    - panda_joint3
-    - panda_joint4
-    - panda_joint5
-    - panda_joint6
-    - panda_joint7
-  arm_id: panda
+    - $(arg robot_name)_joint1
+    - $(arg robot_name)_joint2
+    - $(arg robot_name)_joint3
+    - $(arg robot_name)_joint4
+    - $(arg robot_name)_joint5
+    - $(arg robot_name)_joint6
+    - $(arg robot_name)_joint7
+  arm_id: $(arg robot_name)
+
+# FOR SIMULATION
+joint_state_controller:
+  type: joint_state_controller/JointStateController
+  publish_rate: 1000

@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:macro name="panda_hand_gazebo" params="robot_name">
+    
+     <gazebo reference="$(arg robot_name)_rightfinger">
+      <mu1>1.0</mu1>
+      <mu2>1.0</mu2>
+      <!-- <kp>1000000.0</kp> -->
+      <!-- <kd>1.0</kd> -->
+      <!-- <fdir1>1 0 0</fdir1> -->
+      <!-- <minDepth>0.002</minDepth> -->
+      <!-- <maxContacts>2</maxContacts> -->
+      <!-- <maxVel>0</maxVel> -->
+    </gazebo>
+    <gazebo reference="$(arg robot_name)_leftfinger">
+      <mu1>1.0</mu1>
+      <mu2>1.0</mu2>
+      <!-- <kp>1000000.0</kp> -->
+      <!-- <kd>1.0</kd> -->
+      <!-- <fdir1>1 0 0</fdir1> -->
+      <!-- <minDepth>0.002</minDepth> -->
+      <!-- <maxContacts>2</maxContacts> -->
+      <!-- <maxVel>0</maxVel> -->
+    </gazebo>
+
+    <!-- grasp plugin -->
+
+    <gazebo>
+      <plugin name="gazebo_grasp_fix" filename="libgazebo_grasp_fix.so">
+        <arm>
+          <arm_name>$(arg robot_name)</arm_name>          
+          <palm_link>$(arg robot_name)_link7</palm_link>
+          <!-- <palm_link>$(arg robot_name)_link_ee</palm_link> -->
+          <gripper_link>$(arg robot_name)_leftfinger</gripper_link>
+          <gripper_link>$(arg robot_name)_rightfinger</gripper_link>
+        </arm>
+        <!-- forces_angle_tolerance is the tolerance angle (in degrees) between two force vectors to be considered "opposing forces". -->
+        <forces_angle_tolerance>100</forces_angle_tolerance>
+        <!-- update_rate is the rate at which all contact points are checked against the "gripping criterion" -->
+        <update_rate>10</update_rate>
+        <!-- grip_count_threshold is number of times in the update loop (running at update_rate) that an object has to be detected as "gripped" in order to attach the object. Adjust this with the update rate. -->
+        <grip_count_threshold>4</grip_count_threshold>
+         <!-- So this counter is like a "buffer" which, when it is full, maintains the state, and when it is empty, again, the object is released. This should be at least double of grip_count_threshold -->
+        <max_grip_count>8</max_grip_count>
+        <!-- <release_tolerance> is the distance which the gripper links are allowed to move away from the object during* a grasp without the object being detached, even if there are currently no actual contacts on the object -->
+        <release_tolerance>0.005</release_tolerance>
+        <disable_collisions_on_attach>false</disable_collisions_on_attach>
+        <contact_topic>__default_topic__</contact_topic>
+      </plugin>
+    </gazebo>
+
+  </xacro:macro>
+</robot>
+
