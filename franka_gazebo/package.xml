@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>franka_world</name>
+  <name>franka_gazebo</name>
   <version>0.1.0</version>
   <description>This package configures the Franka simulation in Gazebo</description>
 

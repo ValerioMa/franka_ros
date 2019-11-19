@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="description_file"   default ="$(find franka_description)/robots/panda_arm_on_table.urdf.xacro"/>
+  <arg name="hardware_interface" default="PositionJointInterface"/>
+  <arg name="robot_name" default="panda" />
+
+  <include file="$(find franka_description)/launch/load_URDF.launch">    
+    <arg name="description_param" default = "$(arg robot_name)/robot_description"/>
+    <arg name="description_file"  default = "$(arg description_file)" />
+    <arg name="xacro_params"      default = "hardware_interface:=$(arg hardware_interface)" /> 
+    <arg name="robot_name"        default = "$(arg robot_name)" />
+  </include>
+</launch>

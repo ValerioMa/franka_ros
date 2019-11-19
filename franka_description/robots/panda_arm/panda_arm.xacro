@@ -20,7 +20,7 @@
   <xacro:macro name="panda_arm" params="robot_name parent hardware_interface *origin">
 
     <!--joint between {parent} and link_0-->
-    <joint name="${parent}_${robot_name}_joint" type="fixed">
+    <joint name="${robot_name}_joint0" type="fixed">
       <xacro:insert_block name="origin"/>
       <parent link="${parent}"/>
       <child link="${robot_name}_link0"/>

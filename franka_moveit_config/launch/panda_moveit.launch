@@ -1,10 +1,13 @@
 <?xml version="1.0" ?>
 <launch>
-  <arg name="load_gripper" default="true" />
+  <arg name="load_gripper" default="false" />
+  <arg name="robot_description" default="panda/robot_description" />
 
   <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" args="position_joint_trajectory_controller"/>
 
-  <include file="$(find panda_moveit_config)/launch/move_group.launch">
+  
+  <include file="$(find franka_moveit_config)/launch/move_group.launch">  	
     <arg name="load_gripper" value="$(arg load_gripper)" />
+    <arg name="robot_description" value="$(arg robot_description)" />
   </include>
 </launch>

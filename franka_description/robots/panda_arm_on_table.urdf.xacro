@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="panda_arm">
+
+  <xacro:arg name="hardware_interface" default="PositionJointInterface"/>
+  <xacro:arg name="robot_name" default="panda"/>
+  <xacro:arg name="parent" default=''/>
+
+  <xacro:include filename="$(find franka_description)/robots/panda_arm/panda_arm.xacro"/>
+  <xacro:include filename="$(find franka_description)/robots/arm_base/arm_base.xacro"/>
+  
+  <xacro:property name="parent_" value="$(arg parent)" />	
+  <xacro:if value="${not parent_}">
+    <xacro:property name="parent_" value="world" />	  
+    <link name="${parent_}">
+    	<intertial>
+  	    <mass value="100"/>
+      <inertia ixx="8" ixy="0" ixz="0" iyy="8" iyz="0" izz="8"/>
+    	</intertial>
+    </link>
+    <gazebo reference="${parent_}">
+        <static>true</static>		    
+    </gazebo>	  
+  </xacro:if>
+  <xacro:arm_base parent="${parent_}" base_adapter_child="$(arg robot_name)_base"/>
+  <xacro:panda_arm robot_name="$(arg robot_name)" parent="$(arg robot_name)_base" hardware_interface="$(arg hardware_interface)">
+  	<origin xyz="0 0 0.02" rpy="0 0 0"/> <!-- TODO: this offset should be inside the arm_base -->
+  </xacro:panda_arm>  
+</robot>
