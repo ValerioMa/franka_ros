@@ -3,41 +3,40 @@
 
   <xacro:arg name="hardware_interface" default="PositionJointInterface"/>
   <xacro:arg name="robot_name" default="panda"/>
-  <xacro:arg name="parent" default=''/>
-
+    
   <xacro:include filename="$(find franka_description)/robots/panda_arm/panda_arm.xacro"/>
-  <!-- <xacro:include filename="$(find franka_description)/robots/panda_hand/hand.xacro"/> -->
-	<xacro:property name="parent_" value="$(arg parent)" />	  
+  <xacro:include filename="$(find franka_description)/robots/panda_hand/panda_hand.xacro"/>
+	
 
-	<!-- <xacro:unless value="${not $(arg parent)}">			</xacro:unless> -->
-	<xacro:if value="${not parent_}">
-		<xacro:property name="parent_" value="world" />	  
-    <link name="${parent_}">
-        <visual>
-            <geometry>
-                <box size="2. 2 0.01"/>
-            </geometry>
-            <origin xyz="0 0 0"/>
-        </visual>
-        <collision>
-            <geometry>
-                <box size="2. 2 0.01"/>
-            </geometry>
-            <origin xyz="0 0 0"/>
-        </collision>
-        <intertial>
-            <mass value="100"/>
-            <inertia ixx="8" ixy="0" ixz="0" iyy="8" iyz="0" izz="8"/>
-        </intertial>
-    </link>
-		<gazebo reference="world">
-		    <static>true</static>		    
-		</gazebo>	  
-	</xacro:if>
+	<!-- <xacro:unless value="${not $(arg parent)}">			</xacro:unless> -->	
+	<xacro:property name="parent_" value="world" />	  
+  <link name="${parent_}">
+      <visual>
+          <geometry>
+              <box size="2. 2 0.01"/>
+          </geometry>
+          <origin xyz="0 0 0"/>
+      </visual>
+      <collision>
+          <geometry>
+              <box size="2. 2 0.01"/>
+          </geometry>
+          <origin xyz="0 0 0"/>
+      </collision>
+      <intertial>
+          <mass value="100"/>
+          <inertia ixx="8" ixy="0" ixz="0" iyy="8" iyz="0" izz="8"/>
+      </intertial>
+  </link>
+	<gazebo reference="world">
+	    <static>true</static>		    
+	</gazebo>	  
+	
 
-  <xacro:panda_arm robot_name="$(arg robot_name)" parent="${parent_}" hardware_interface="$(arg hardware_interface)">
-  	<origin xyz="0 0 0" rpy="0 0 0"/>
+  <xacro:panda_arm robot_name="$(arg robot_name)" parent="${parent_}" hardware_interface="$(arg hardware_interface)" hand_link_name="$(arg robot_name)_hand">
+  	<origin xyz="0 0 0" rpy="0 0 0"/>    
   </xacro:panda_arm>
 
-  <xacro:hand ns="${robot_name}" rpy="0 0 ${-pi/4}" connected_to="panda_link8"/>
+  <xacro:panda_hand robot_name="$(arg robot_name)" hardware_interface="$(arg hardware_interface)" first_link_name="$(arg robot_name)_hand"/>
+
 </robot>

@@ -3,26 +3,17 @@
 
   <xacro:arg name="hardware_interface" default="PositionJointInterface"/>
   <xacro:arg name="robot_name" default="panda"/>
-  <xacro:arg name="parent" default=''/>
+  <xacro:arg name="hand_link_name" default=''/>  
+  <xacro:arg name="hand_link_name" default=''/>
 
-  <xacro:include filename="$(find franka_description)/robots/panda_arm/panda_arm.xacro"/>
-  <xacro:include filename="$(find franka_description)/robots/arm_base/arm_base.xacro"/>
+  <xacro:include filename="$(find franka_description)/robots/arm_table.xacro"/>
   
-  <xacro:property name="parent_" value="$(arg parent)" />	
-  <xacro:if value="${not parent_}">
-    <xacro:property name="parent_" value="world" />	  
-    <link name="${parent_}">
-    	<intertial>
-  	    <mass value="100"/>
-      <inertia ixx="8" ixy="0" ixz="0" iyy="8" iyz="0" izz="8"/>
-    	</intertial>
-    </link>
-    <gazebo reference="${parent_}">
-        <static>true</static>		    
-    </gazebo>	  
-  </xacro:if>
-  <xacro:arm_base parent="${parent_}" base_adapter_child="$(arg robot_name)_base"/>
-  <xacro:panda_arm robot_name="$(arg robot_name)" parent="$(arg robot_name)_base" hardware_interface="$(arg hardware_interface)">
-  	<origin xyz="0 0 0.02" rpy="0 0 0"/> <!-- TODO: this offset should be inside the arm_base -->
-  </xacro:panda_arm>  
+  <xacro:property name="parent" value="world" />   
+  <link name="${parent}"/>
+  <gazebo reference="${parent}">
+      <static>true</static>       
+  </gazebo>  
+
+  <!-- hand_link_name=:''  -->
+  <xacro:arm_hand_table parent="${parent}" robot_name="$(arg robot_name)" hardware_interface="$(arg hardware_interface)"/>
 </robot>

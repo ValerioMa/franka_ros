@@ -6,19 +6,28 @@
   <arg name="robot_description"  default="$(arg robot_name)/robot_description"/>  
   <arg name="is_simulation"      default="true" />
   <arg name="controllers"        default="position_joint_trajectory_controller"/>
-  
+  <arg name="description_file"   default ="$(find franka_description)/robots/panda_arm_on_table.urdf.xacro"/>
+  <arg name="xacro_params"      default = "hardware_interface:=$(arg hardware_interface)" /> 
+
+
   <!-- Different controller betwheen simulation and real world -->
   <arg name="ctrls_" value="$(arg controllers) franka_state_controller" unless="$(arg is_simulation)"/>
   <arg name="ctrls_" value="$(arg controllers) joint_state_controller"  if="$(arg is_simulation)"/>
 
+
   <!-- Load Robot Description -->
-  <include file="$(find franka_description)/launch/load_panda_arm.launch"/>
+  <include file="$(find franka_description)/launch/load_URDF.launch">    
+    <arg name="description_param" default = "$(arg robot_name)/robot_description"/>
+    <arg name="description_file"  default = "$(arg description_file)" />
+    <arg name="xacro_params"      default = "$(arg xacro_params)" /> 
+    <arg name="robot_name"        default = "$(arg robot_name)" />
+  </include>
+  
 
   <!-- Launch gazebo world if simulating -->
   <include file="$(find franka_gazebo)/launch/gazebo.launch" if="$(arg is_simulation)">  
     <arg name="debug"    value="false" />
   </include>
-
   <group ns="$(arg robot_name)">    
     <!-- Load Params -->
     <rosparam command="load" subst_value="True" file="$(find franka_control)/config/default_controllers.yaml" />

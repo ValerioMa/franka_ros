@@ -2,6 +2,7 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
   <xacro:property name="M_PI" value="3.1415926535897931" />  
   <xacro:include filename="$(find franka_description)/robots/arm_base/arm_base.gazebo.xacro" />
+  <xacro:include filename="$(find franka_description)/robots/materials.xacro" />
   
 
   <xacro:macro name="arm_base" params="parent base_adapter_child">
@@ -37,23 +38,30 @@
     <joint name="table_${base_adapter_child}_joint" type="fixed">
       <parent link="table" />
       <child link="${base_adapter_child}" />
-      <origin xyz="-0.2 0 0" rpy="0 0 0"/>
+      <origin xyz="-0.38 0 0.025" rpy="0 0 0"/>
     </joint>
+
     <link name="${base_adapter_child}">
       <visual>
-        <origin xyz="0 0 0" rpy="0 0 0"/>
-        <geometry>
-          <mesh filename="package://franka_description/meshes/arm_base/visual/base_adapter.dae"/>
+        <material name="grey"/>
+        <origin xyz="-0.072 0 -0.0125" rpy="0 0 0"/>
+        <geometry>          
+          <box size="0.3 0.3 0.025" />          
+          <!-- <mesh filename="package://franka_description/meshes/arm_base/visual/base_adapter.dae"/> -->
         </geometry>
       </visual>
       <collision>
-        <origin xyz="0 0 0.01" rpy="0 0 0"/>
+        <origin xyz="-0.072 0 -0.0125" rpy="0 0 0"/>
         <geometry>
-          <cylinder length="0.02" radius="0.16"/>
+          <!-- Real box dimension -->
+          <!-- <box size="0.4 0.4 0.025" /> -->
+
+          <!-- Augmented box dimension -->
+          <box size="0.4 0.4 0.3" />
+          <!-- <cylinder length="0.02" radius="0.16"/> -->
         </geometry>
       </collision>
     </link>
     <xacro:arm_base_gazebo />
   </xacro:macro>
-
 </robot>

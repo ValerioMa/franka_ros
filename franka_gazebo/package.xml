@@ -6,11 +6,11 @@
 
   <maintainer email="valerio.magnago@fraunhofer.it">Valerio Magnago</maintainer>
 
-  <license>GPLv3+</license>
+  <license>Apache 2.0</license>
 
   <buildtool_depend>catkin</buildtool_depend>
 
-  <exec_depend>rll_description</exec_depend>
+  <exec_depend>franka_description</exec_depend>
   <exec_depend>gazebo_ros</exec_depend>
 
 </package>

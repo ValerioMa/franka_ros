@@ -1,20 +1,14 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
  
-  <xacro:include filename="$(find franka_description)/urdf/franka_hand/franka_hand.gazebo.xacro"/>
-  <xacro:include filename="$(find franka_description)/urdf/franka_hand/franka_hand.transmission.xacro"/>
+  <xacro:include filename="$(find franka_description)/robots/panda_hand/panda_hand.gazebo.xacro"/>
+  <xacro:include filename="$(find franka_description)/robots/panda_hand/panda_hand.transmission.xacro"/>
 
   <xacro:property name="joint_lower_limit" value="0.0" />
   <xacro:property name="joint_upper_limit" value="0.055" />
 
-  <xacro:macro name="franka_hand" params="parent hardware_interface robot_name">
-    <joint name="${parent}_hand_joint" type="fixed">
-      <parent link="${parent}"/>
-      <child link="${robot_name}_hand"/>
-      <origin xyz="0 0 0" rpy="0 0 ${-pi/4}"/>
-    </joint>
-
-    <link name="${robot_name}_hand">
+  <xacro:macro name="panda_hand" params="robot_name hardware_interface first_link_name">
+    <link name="${first_link_name}">
       <inertial>
         <mass value="0.73" />
         <origin xyz="0 0.0015244 0.0275912" rpy="0 0 0" />
@@ -23,7 +17,7 @@
       <visual>
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
-          <mesh filename="package://franka_description/meshes/franka_hand/visual/hand.dae"/>
+          <mesh filename="package://franka_description/meshes/panda_hand/visual/hand.dae"/>
         </geometry>
         <material name="">
           <color rgba="1 1 1 1"/>
@@ -32,7 +26,7 @@
       <collision>
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
-          <mesh filename="package://franka_description/meshes/franka_hand/collision/hand.stl"/>
+          <mesh filename="package://franka_description/meshes/panda_hand/collision/hand.stl"/>
         </geometry>
       </collision>
     </link>
@@ -54,7 +48,7 @@
       <visual>
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
-          <mesh filename="package://franka_description/meshes/franka_hand/visual/finger.dae"/>
+          <mesh filename="package://franka_description/meshes/panda_hand/visual/finger.dae"/>
         </geometry>
         <material name="">
           <color rgba="1 1 1 1"/>
@@ -63,7 +57,7 @@
       <collision>
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
-          <mesh filename="package://franka_description/meshes/franka_hand/collision/finger.stl"/>
+          <mesh filename="package://franka_description/meshes/panda_hand/collision/finger.stl"/>
         </geometry>
       </collision>
     </link>
@@ -85,7 +79,7 @@
       <visual>
         <origin xyz="0 0 0" rpy="0 0 ${pi}"/>
         <geometry>
-          <mesh filename="package://franka_description/meshes/franka_hand/visual/finger.dae"/>
+          <mesh filename="package://franka_description/meshes/panda_hand/visual/finger.dae"/>
         </geometry>
         <material name="">
           <color rgba="1 1 1 1"/>
@@ -94,13 +88,13 @@
       <collision>
         <origin xyz="0 0 0" rpy="0 0 ${pi}"/>
         <geometry>
-          <mesh filename="package://franka_description/meshes/franka_hand/collision/finger.stl"/>
+          <mesh filename="package://franka_description/meshes/panda_hand/collision/finger.stl"/>
         </geometry>
       </collision>
     </link>
 
-    <xacro:franka_hand_gazebo robot_name="${robot_name}" />
-    <xacro:franka_hand_transmission hardware_interface="${hardware_interface}" robot_name="${robot_name}"/>
+    <xacro:panda_hand_gazebo robot_name="${robot_name}" />
+    <xacro:panda_hand_transmission hardware_interface="${hardware_interface}" robot_name="${robot_name}"/>
   </xacro:macro>
 
 </robot>
