@@ -319,13 +319,13 @@
       </inertial>
     </link>
 
-    <xacro:if value="${not hand_link_name}">
+    <!-- <xacro:if value="${not hand_link_name}"> -->
       <joint name="${robot_name}_hand_joint" type="fixed">
         <parent link="${robot_name}_link8"/>
-        <child link="$(arg robot_name)_hand"/>
+        <child link="${hand_link_name}"/>
         <origin xyz="0 0 0" rpy="0 0 ${-pi/4}"/>
       </joint>
-    </xacro:if>
+    <!-- </xacro:if> -->
 
     <!--Extensions -->
     <xacro:panda_gazebo robot_name="${robot_name}" />
