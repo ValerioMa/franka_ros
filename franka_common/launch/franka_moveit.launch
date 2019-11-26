@@ -27,6 +27,7 @@
   <!-- Launch gazebo world if simulating -->
   <include file="$(find franka_gazebo)/launch/gazebo.launch" if="$(arg is_simulation)">  
     <arg name="debug"    value="false" />
+    <arg name="gui"      value="false" />
   </include>
   <group ns="$(arg robot_name)">    
     <!-- Load Params -->
