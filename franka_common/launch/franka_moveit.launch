@@ -1,6 +1,7 @@
 <?xml version="1.0" ?>
 <launch>
   <arg name="robot_ip" default="panda" />  
+  <arg name="gazebo_gui" default="false" />  
   <arg name="robot_name"         default="panda"/>  
   <arg name="hardware_interface" default="PositionJointInterface"/>
   <arg name="robot_description"  default="$(arg robot_name)/robot_description"/>  
@@ -27,7 +28,7 @@
   <!-- Launch gazebo world if simulating -->
   <include file="$(find franka_gazebo)/launch/gazebo.launch" if="$(arg is_simulation)">  
     <arg name="debug"    value="false" />
-    <arg name="gui"      value="false" />
+    <arg name="gui"      value="$(arg gazebo_gui)" />
   </include>
   <group ns="$(arg robot_name)">    
     <!-- Load Params -->

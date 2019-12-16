@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:include filename="$(find franka_description)/robots/panda_arm/panda_arm_macro.xacro"/>
+  <xacro:include filename="$(find franka_description)/robots/panda_hand/panda_hand_macro.xacro"/>
+	
+  <xacro:macro name="panda_arm_hand" params="robot_name hardware_interface">      
+
+    <!-- PANDA ARM -->
+    <xacro:panda_arm robot_name="${robot_name}" hardware_interface="${hardware_interface}"/>    
+
+    <!-- ARM HAND joint -->
+    <joint name="${robot_name}_hand_joint" type="fixed">
+      <parent link="${robot_name}_link8"/>
+      <child link="${robot_name}_hand"/>
+      <origin xyz="0 0 0" rpy="0 0 ${-pi/4}"/>
+    </joint>
+    
+    <!-- PANDA HAND -->
+    <xacro:panda_hand robot_name="${robot_name}" hardware_interface="${hardware_interface}"/>
+  </xacro:macro>
+</robot>
