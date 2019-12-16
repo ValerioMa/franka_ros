@@ -22,9 +22,19 @@
   <node name="state_controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" args="$(arg controllers_)"/>
 
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" output="screen">
-    <remap from="joint_states" to="/$(arg robot_name)/joint_states" />
+    <!--remap from="joint_states" to="/$(arg robot_name)/joint_states" /-->
     <param name="robot_description" value="$(arg robot_description)"/>
     <!-- <param name="ignore_timestamp" type="bool" value="true"/> -->
+  </node>
+
+  <node name="joint_state_publisher" type="joint_state_publisher" pkg="joint_state_publisher" output="screen">
+    <rosparam param="source_list">[franka_state_controller/joint_states] </rosparam>
+    <param name="rate" value="30"/>
+  </node>
+  <node name="joint_state_desired_publisher" type="joint_state_publisher" pkg="joint_state_publisher" output="screen">
+    <rosparam param="source_list">[franka_state_controller/joint_states_desired] </rosparam>
+    <param name="rate" value="30"/>
+    <remap from="panda/joint_states" to="panda/joint_states_desired" />
   </node>
 
 </launch>
